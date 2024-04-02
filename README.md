@@ -1,29 +1,91 @@
-Projeto Lotofácil em Java
+import java.util.Random;
+import java.util.Scanner;
 
-Este é um projeto desenvolvido em Java que implementa um sistema básico de loteria chamado Lotofácil. O sistema é capaz de gerar jogos aleatórios, permitir que os jogadores façam suas apostas, verificar os resultados e calcular prêmios de acordo com as regras da loteria.
+public class LotoFacil {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
 
-Funcionalidades Principais:
+        int opcao;
+        do {
+            System.out.println("**************************");
+            System.out.println("Menu LOTOFÁCIL:");
+            System.out.println("1) Apostar de 0 a 100");
+            System.out.println("2) Apostar de A à Z");
+            System.out.println("3) Apostar em par ou ímpar");
+            System.out.println("0) Sair");
+            System.out.println("**************************");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
 
-Menu Interativo: O sistema apresenta um menu interativo para o usuário, permitindo que ele escolha entre diferentes opções de aposta na Lotofácil.
-Apostar de 0 a 100: Os jogadores podem fazer uma aposta de um número de 0 a 100 e comparar com o número sorteado pelo sistema.
-Apostar de A à Z: Os jogadores podem fazer uma aposta em uma letra de A à Z e comparar com a letra premiada pelo sistema.
+            switch (opcao) {
+                case 1:
+                    apostarDe0a100(scanner, random);
+                    break;
+                case 2:
+                    apostarDeAaZ(scanner);
+                    break;
+                case 3:
+                    apostarParOuImpar(scanner);
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        } while (opcao != 0);
 
-Apostar em Par ou Ímpar: Os jogadores podem fazer uma aposta em um número inteiro e verificar se é par ou ímpar.
+        scanner.close();
+    }
 
-Como Utilizar o Projeto:
-Clone este repositório para o seu ambiente de desenvolvimento local.
+    public static void apostarDe0a100(Scanner scanner, Random random) {
+        System.out.print("Digite um número de 0 a 100: ");
+        int numeroApostado = scanner.nextInt();
 
-Abra o projeto em sua IDE Java preferida (como IntelliJ IDEA, Eclipse, etc.).
+        if (numeroApostado < 0 || numeroApostado > 100) {
+            System.out.println("Aposta inválida.");
+            return;
+        }
 
-Compile e execute o arquivo LotoFacil.java.
+        int numeroSorteado = random.nextInt(101);
 
-Siga as instruções apresentadas no terminal para interagir com o sistema e fazer suas apostas na Lotofácil.
+        if (numeroApostado == numeroSorteado) {
+            System.out.println("Você ganhou R$ 1.000,00 reais.");
+        } else {
+            System.out.println("Que pena! O número sorteado foi: " + numeroSorteado + ".");
+        }
+    }
 
-Pré-requisitos:
+    public static void apostarDeAaZ(Scanner scanner) {
+        System.out.print("Digite uma letra de A à Z: ");
+        char letraApostada = scanner.next().toUpperCase().charAt(0);
 
-JDK (Java Development Kit) instalado em seu sistema.
+        if (!Character.isLetter(letraApostada)) {
+            System.out.println("Aposta inválida.");
+            return;
+        }
 
-Uma IDE Java instalada para facilitar o desenvolvimento e execução do código.
+        char letraPremiada = 'J'; // Exemplo: Letra premiada é 'J'
 
-Este projeto foi desenvolvido como parte de um exercício prático para a disciplina de Linguagens de Programação. Sinta-se à vontade para explorar o código-fonte, fazer melhorias ou contribuir para o projeto!
+        if (letraApostada == letraPremiada) {
+            System.out.println("Você ganhou R$ 500,00 reais.");
+        } else {
+            System.out.println("Que pena! A letra sorteada foi: " + letraPremiada + ".");
+        }
+    }
+
+    public static void apostarParOuImpar(Scanner scanner) {
+        System.out.print("Digite um número inteiro: ");
+        int numeroDigitado = scanner.nextInt();
+
+        if (numeroDigitado % 2 == 0) {
+            System.out.println("Você ganhou R$ 100,00 reais.");
+        } else {
+            System.out.println("Que pena! O número digitado é ímpar e a premiação foi para números pares.");
+        }
+    }
+
+
+}
 
